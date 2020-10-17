@@ -18,16 +18,26 @@ public class Recipe {
     private String url;
     private String directions;
 
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
+
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredientSet;
-    //todo add
-    //private Difficult difficult;
 
     @Lob
     private Byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
 
     public Set<Ingredient> getIngredientSet() {
         return ingredientSet;
@@ -36,6 +46,8 @@ public class Recipe {
     public void setIngredientSet(Set<Ingredient> ingredientSet) {
         this.ingredientSet = ingredientSet;
     }
+
+
 
     public Long getId() {
         return id;
