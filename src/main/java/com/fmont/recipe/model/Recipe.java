@@ -1,6 +1,7 @@
 package com.fmont.recipe.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -16,6 +17,9 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredientSet;
     //todo add
     //private Difficult difficult;
 
@@ -24,6 +28,14 @@ public class Recipe {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+
+    public Set<Ingredient> getIngredientSet() {
+        return ingredientSet;
+    }
+
+    public void setIngredientSet(Set<Ingredient> ingredientSet) {
+        this.ingredientSet = ingredientSet;
+    }
 
     public Long getId() {
         return id;
