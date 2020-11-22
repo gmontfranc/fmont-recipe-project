@@ -2,41 +2,43 @@ package com.fmont.recipe.services;
 
 import com.fmont.recipe.model.Recipe;
 import com.fmont.recipe.repositories.RecipeRepository;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class RecipeServiceImplTest {
-
-    RecipeService recipeService;
 
     @Mock
     RecipeRepository recipeRepository;
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
-    }
+    @InjectMocks
+    RecipeServiceImpl recipeService;
 
     @Test
     public void getRecipes() {
-
         Recipe recipe = new Recipe();
-        HashSet recipesData = new HashSet();
+        List recipesData = new ArrayList();
         recipesData.add(recipe);
-        when(recipeService.getRecipes()).thenReturn(recipesData);
+        Mockito.when(recipeRepository.findAll()).thenReturn(recipesData);
         Set<Recipe> recipes = recipeService.getRecipes();
 
-        assertEquals(recipes.size(), 1);
+        assertThat(recipes).hasSize(1);
 
-        verify(recipeRepository,times(1)).findAll();
+        verify(recipeRepository, times(1)).findAll();
     }
+
+
+
 }
